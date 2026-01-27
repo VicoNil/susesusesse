@@ -1,0 +1,85 @@
+/* Reset básico para quitar márgenes por defecto */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #D4D4D4; /* Color exacto de la referencia */
+    color: #000000;
+    font-family: 'Archivo', sans-serif;
+    height: 100vh; /* Ocupar toda la altura */
+    overflow: hidden; /* Evitar scroll si queremos que quede fijo como un póster */
+    padding: 2rem; /* Margen alrededor de toda la web */
+}
+
+/* --- HEADER --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 400; /* Regular */
+    font-size: 1rem; 
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+}
+
+/* --- LAYOUT PRINCIPAL (GRID) --- */
+.grid-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* La columna izquierda ocupa el doble que la derecha */
+    height: calc(100% - 60px); /* Restamos la altura aprox del header */
+    align-items: center; /* Centrar verticalmente */
+}
+
+/* --- MENÚ GIGANTE (IZQUIERDA) --- */
+.big-menu {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.85; /* Altura de línea ajustada para que queden pegados como en el diseño */
+}
+
+.menu-item {
+    text-decoration: none;
+    color: #000000;
+    font-weight: 400; /* Regular (según tu foto) */
+    
+    /* TRUCO: Usar 'vw' hace que el texto escale con el ancho de la pantalla */
+    font-size: 21vw; 
+    
+    letter-spacing: -0.08em; /* -8% según tu foto */
+    transition: transform 0.3s ease; /* Suavizado para el efecto zoom */
+    display: block;
+    transform-origin: left center; /* El zoom crece hacia la derecha */
+}
+
+/* Efecto Hover (Zoom) */
+.menu-item:hover {
+    transform: scale(1.05); /* Pequeño zoom del 5% */
+}
+
+/* --- BIO (DERECHA) --- */
+.bio-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espacio entre párrafos */
+    font-weight: 300; /* Light (según tu foto) */
+    font-size: 24px; /* Tamaño 24 según tu foto */
+    letter-spacing: -0.05em; /* -5% según tu foto */
+    line-height: 1.2;
+    
+    /* Alineación */
+    justify-content: center;
+    padding-left: 2rem;
+}
+
+.bio-container p {
+    max-width: 450px; /* Para que el texto no se estire demasiado */
+}
+
+.email-link {
+    color: #000000;
+    text-decoration: underline;
+    font-weight: 400;
+}
