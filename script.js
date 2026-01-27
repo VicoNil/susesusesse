@@ -1,14 +1,30 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('SUSESUSESSE Portfolio cargado correctamente.');
-
-    // Seleccionamos los elementos del menú
+    
     const menuItems = document.querySelectorAll('.menu-item');
+    const imageContainer = document.querySelector('.cursor-image-container');
+    const floatingImage = document.getElementById('floating-image');
 
-    // Aquí podrías añadir lógica adicional si quisieras
-    // Por ejemplo, cambiar el cursor o hacer sonar un click
+    // 1. Mover la imagen con el ratón
+    document.addEventListener('mousemove', (e) => {
+        // Actualizamos la posición del contenedor basándonos en el ratón
+        imageContainer.style.left = e.clientX + 'px';
+        imageContainer.style.top = e.clientY + 'px';
+    });
+
+    // 2. Detectar cuando entramos/salimos de los enlaces
     menuItems.forEach(item => {
         item.addEventListener('mouseenter', () => {
-            console.log(`Haciendo hover en: ${item.textContent}`);
+            // Cogemos la URL de la foto del atributo data-image
+            const imageUrl = item.getAttribute('data-image');
+            
+            if (imageUrl) {
+                floatingImage.src = imageUrl;
+                imageContainer.classList.add('visible');
+            }
+        });
+
+        item.addEventListener('mouseleave', () => {
+            imageContainer.classList.remove('visible');
         });
     });
 });
