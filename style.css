@@ -23,30 +23,36 @@ header {
     text-transform: uppercase;
     margin-bottom: 2rem;
     letter-spacing: -0.02em;
+    height: 30px; /* Altura fija para el cálculo del grid */
 }
 
 /* --- LAYOUT PRINCIPAL (GRID) --- */
 .grid-container {
     display: grid;
     grid-template-columns: 2fr 1fr; /* La columna izquierda ocupa el doble que la derecha */
-    height: calc(100% - 60px); /* Restamos la altura aprox del header */
-    align-items: center; /* Centrar verticalmente */
+    /* Calculamos la altura restante: 100% menos el header y los paddings */
+    height: calc(100vh - 4rem - 50px); 
+    align-items: center; /* Centrar verticalmente todo el bloque */
 }
 
 /* --- MENÚ GIGANTE (IZQUIERDA) --- */
 .big-menu {
     display: flex;
     flex-direction: column;
-    line-height: 0.85; /* Altura de línea ajustada para que queden pegados como en el diseño */
+    justify-content: center;
+    line-height: 0.85; /* Altura de línea ajustada para que queden pegados */
+    height: 100%;
 }
 
 .menu-item {
     text-decoration: none;
     color: #000000;
-    font-weight: 400; /* Regular (según tu foto) */
+    font-weight: 400; /* Regular */
     
-    /* TRUCO: Usar 'vw' hace que el texto escale con el ancho de la pantalla */
-    font-size: 21vw; 
+    /* --- CAMBIO PRINCIPAL AQUÍ --- */
+    /* Antes era 21vw (ancho). Ahora usamos 27vh (alto).
+       Esto asegura que las 3 líneas quepan verticalmente. */
+    font-size: 27vh; 
     
     letter-spacing: -0.08em; /* -8% según tu foto */
     transition: transform 0.3s ease; /* Suavizado para el efecto zoom */
@@ -72,10 +78,11 @@ header {
     /* Alineación */
     justify-content: center;
     padding-left: 2rem;
+    height: 100%;
 }
 
 .bio-container p {
-    max-width: 450px; /* Para que el texto no se estire demasiado */
+    max-width: 500px; /* Un poco más ancho para compensar */
 }
 
 .email-link {
