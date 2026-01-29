@@ -4,13 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Aquí pon todas las fotos que quieres que roten
     const workImages = [
         'tsukareta.jpg',
-        'imagen2.png',
-        'imagen3.png',
-        'imagen4.png',
-        'imagen5.png',
-        'imagen6.png',
-        'imagen7.png',
-        'imagen8.png'
+        'imagen2.jpg',
+        'imagen3.jpg',
+        'imagen4.jpg',
+        'imagen5.jpg',
+        'imagen6.jpg',
+        'imagen7.jpg',
+        'imagen8.jpg'
     ];
     let workIndex = 0; // Empezamos por la primera
     const workLink = document.getElementById('work-link');
