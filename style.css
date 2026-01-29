@@ -1,4 +1,4 @@
-/* Reset básico para quitar márgenes por defecto */
+/* --- RESET BÁSICO --- */
 * {
     margin: 0;
     padding: 0;
@@ -6,87 +6,204 @@
 }
 
 body {
-    background-color: #D4D4D4; /* Color exacto de la referencia */
+    background-color: #D4D4D4;
     color: #000000;
     font-family: 'Archivo', sans-serif;
-    height: 100vh; /* Ocupar toda la altura */
-    overflow: hidden; /* Evitar scroll si queremos que quede fijo como un póster */
-    padding: 2rem; /* Margen alrededor de toda la web */
+    height: 100vh;
+    overflow: hidden;
+    padding: 2vh 2vw; /* Margen fino de la web */
+    cursor: default;
+    display: flex;
+    flex-direction: column;
 }
+
+/* --- RUIDO --- */
+.noise-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 9999; opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* --- CONTENEDOR FLOTANTE --- */
+.cursor-image-container {
+    position: fixed; top: 0; left: 0; width: 350px; height: 450px;
+    z-index: -1; pointer-events: none; opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition: opacity 0.3s ease, transform 0.5s ease-out;
+    overflow: hidden; border-radius: 4px;
+}
+.cursor-image-container.visible { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+#floating-image, #floating-video {
+    width: 100%; height: 100%; object-fit: cover;
+    position: absolute; top: 0; left: 0;
+    filter: grayscale(100%) contrast(1.1);
+    display: none;
+}
+.is-active { display: block !important; }
 
 /* --- HEADER --- */
 header {
     display: flex;
     justify-content: space-between;
-    font-weight: 400; /* Regular */
-    font-size: 1rem; 
-    text-transform: uppercase;
-    margin-bottom: 2rem;
-    letter-spacing: -0.02em;
-    height: 30px; /* Altura fija para el cálculo del grid */
+    align-items: flex-start; 
+    width: 100%;
+    margin-bottom: 0; 
+    position: relative;
+    z-index: 20;
+    height: 60px; 
 }
 
-/* --- LAYOUT PRINCIPAL (GRID) --- */
+/* --- LOGO RESTAURADO A TU VERSIÓN ANTERIOR --- */
+.logo {
+    font-size: 1.8rem; 
+    font-weight: 400;
+    line-height: 0.5;
+    color: #4a4a4a;
+    letter-spacing: -0.05em;
+    
+    /* La distorsión alta que tenías */
+    transform: scale(2.5, 3); 
+    transform-origin: left top; 
+    
+    display: inline-block; 
+    margin-bottom: 0.5rem;
+    /* Se han quitado los márgenes negativos para dejarlo en la esquina */
+}
+
+.logo a:hover { color: #000; }
+
+.meta-info {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    padding-top: 5px; 
+    text-align: right;
+}
+
+/* --- GRID PRINCIPAL --- */
 .grid-container {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* La columna izquierda ocupa el doble que la derecha */
-    /* Calculamos la altura restante: 100% menos el header y los paddings */
-    height: calc(100vh - 4rem - 50px); 
-    align-items: center; /* Centrar verticalmente todo el bloque */
+    /* Mantenemos el corte en 61vw para que el texto no se monte en WORK */
+    grid-template-columns: 61vw 1fr; 
+    flex-grow: 1; 
+    align-items: end; 
+    position: relative;
+    z-index: 20;
 }
 
 /* --- MENÚ GIGANTE (IZQUIERDA) --- */
 .big-menu {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    line-height: 0.85; /* Altura de línea ajustada para que queden pegados */
+    justify-content: flex-end; 
+    line-height: 0.82; 
     height: 100%;
+    width: 100%; 
+    white-space: nowrap; 
 }
 
 .menu-item {
     text-decoration: none;
     color: #000000;
-    font-weight: 400; /* Regular */
-    
-    /* --- CAMBIO PRINCIPAL AQUÍ --- */
-    /* Antes era 21vw (ancho). Ahora usamos 27vh (alto).
-       Esto asegura que las 3 líneas quepan verticalmente. */
-    font-size: 27vh; 
-    
-    letter-spacing: -0.08em; /* -8% según tu foto */
-    transition: transform 0.3s ease; /* Suavizado para el efecto zoom */
+    font-weight: 400;
+    font-size: 29vh;
+    letter-spacing: -0.09em;
+    margin-left: -0.04em; 
+    transition: transform 0.3s ease, opacity 0.3s ease;
     display: block;
-    transform-origin: left center; /* El zoom crece hacia la derecha */
+    transform-origin: left center;
+    mix-blend-mode: multiply;
 }
 
-/* Efecto Hover (Zoom) */
-.menu-item:hover {
-    transform: scale(1.05); /* Pequeño zoom del 5% */
-}
+.menu-item:last-child { margin-bottom: -0.03em; }
+
+.menu-item:hover { transform: scale(1.02) translateX(20px); opacity: 1; }
+.big-menu:hover .menu-item:not(:hover) { opacity: 0.3; }
 
 /* --- BIO (DERECHA) --- */
 .bio-container {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem; /* Espacio entre párrafos */
-    font-weight: 300; /* Light (según tu foto) */
-    font-size: 24px; /* Tamaño 24 según tu foto */
-    letter-spacing: -0.05em; /* -5% según tu foto */
+    gap: 1.5rem;
+    font-weight: 300;
+    font-size: 20px;
+    letter-spacing: -0.04em;
     line-height: 1.2;
+    justify-content: flex-end; 
     
-    /* Alineación */
-    justify-content: center;
-    padding-left: 2rem;
+    /* --- CAMBIO AQUÍ: TEXTO MÁS ARRIBA --- */
+    /* He subido de 22vh a 35vh. Sube o baja este número para ajustar la altura. */
+    padding-bottom: 35vh; 
+    
+    padding-left: 2rem; 
+    padding-right: 2rem;
     height: 100%;
 }
 
 .bio-container p {
-    max-width: 500px; /* Un poco más ancho para compensar */
+    max-width: 450px;
+    width: 100%;
+    text-align: justify;
+    hyphens: auto;
 }
 
-.email-link {
-    color: #000000;
-    text-decoration: underline;
-    font-weight: 400;
+.email-link { color: #000000; text-decoration: underline; font-weight: 400; }
+
+/* =========================================
+   VERSION TABLET / PORTÁTIL
+   ========================================= */
+@media screen and (max-width: 1366px) {
+    .grid-container {
+        grid-template-columns: 55vw 1fr; 
+    }
+    /* Ajustamos el logo para que no sea tan bestia en pantallas medianas */
+    .logo {
+        transform: scale(2.0, 2.5); 
+        font-size: 1.6rem;
+    }
+    .menu-item { font-size: 24vh; }
+    .bio-container {
+        font-size: 18px; 
+        padding-right: 1.5rem;
+    }
+}
+
+/* =========================================
+   VERSION MÓVIL
+   ========================================= */
+@media screen and (max-width: 768px) {
+    body {
+        height: auto; overflow-y: auto; overflow-x: hidden; 
+        padding: 1.5rem; display: block; 
+    }
+    header {
+        flex-direction: column; height: auto; margin-bottom: 3rem;
+        align-items: flex-start; width: 100%; 
+    }
+    .logo {
+        font-size: 10vw; transform: scale(1.3, 1.5); /* Ajustado para móvil */
+        margin-left: 0; margin-bottom: 0.5rem;
+        letter-spacing: -0.05em; max-width: 100%; display: block;
+    }
+    .meta-info {
+        text-align: left; font-size: 0.8rem; padding-top: 1rem;
+        width: 100%; border-top: 1px solid #000; margin-top: 0.5rem; 
+    }
+    .grid-container {
+        display: flex; flex-direction: column; height: auto; gap: 3rem; 
+    }
+    .big-menu { width: 100%; line-height: 0.9; }
+    .menu-item { font-size: 19vw; margin-left: -0.05em; margin-bottom: 0; }
+    .bio-container {
+        padding: 0; padding-bottom: 4rem; justify-content: flex-start;
+        padding-right: 0; 
+    }
+    .bio-container p {
+        max-width: 100%; font-size: 1rem; line-height: 1.4;
+        text-align: left; hyphens: auto;
+    }
+    .intro { font-size: 1.4rem; font-weight: 500; margin-bottom: 1rem; }
+    .cursor-image-container { display: none !important; }
+    .menu-item:active { opacity: 0.5; transform: scale(0.98); }
 }
